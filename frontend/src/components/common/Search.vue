@@ -22,16 +22,24 @@ export default {
 
   mounted() {
     this.q = this.$route.query.q
-    this.$store.dispatch('film/searchFilms', { title: this.q })
-    console.log(this.q)
+    if(this.q === undefined) {
 
+    } else {
+      this.$store.dispatch('film/searchFilms', { title: this.q })
+
+    }
   },
+
 
   methods: {
     async Search() {     
       this.$store.dispatch('film/searchFilms', { title: this.title })
     }
-  }
+  },
+  
+
+
+
 }
 </script>
 

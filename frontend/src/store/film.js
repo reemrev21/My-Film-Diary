@@ -24,10 +24,6 @@ export default {
     resetFilms(state) {
       state.films = []
     },
-
-    getQueryTitle() {
-      
-    }
   },
 
   actions: {
