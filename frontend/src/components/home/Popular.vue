@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2><b>현재 상영작</b></h2>
+    <h2><b>인기 영화</b></h2>
     <div class="inner">
       <div class="card mb-3"
         v-for="film in films" 
@@ -39,7 +39,7 @@ export default {
 
   async created() {
     const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
-    const res = await axios.get(`https://api.themoviedb.org/3/movie/now_playing?api_key=${TMDB_API_KEY}`)
+    const res = await axios.get(`https://api.themoviedb.org/3/movie/popular?api_key=${TMDB_API_KEY}`)
     console.log(res)
     this.films = res.data.results
     console.log(this.films)

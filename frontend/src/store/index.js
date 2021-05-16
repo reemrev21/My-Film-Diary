@@ -13,6 +13,7 @@ export default new Vuex.Store({
   },
   modules: {
     film,
-    about
+    about,
+    // home
   }
 })

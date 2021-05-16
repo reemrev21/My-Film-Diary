@@ -61,6 +61,7 @@ export default {
 
 <style lang="scss" scoped>
   header {
+    // position: fixed;
     height: 70px;
     padding: 0 40px;
     display: flex;

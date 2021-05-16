@@ -9,9 +9,7 @@ export default {
   props: {
     film: {
       type: Object,
-      defalut: () => ({
-
-      })
+      defalut: () => ({ })
     }
   }
 }
