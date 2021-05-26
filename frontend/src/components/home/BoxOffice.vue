@@ -2,17 +2,16 @@
   <div class="container">
     <h2><b>현재 상영작</b></h2>
     <div class="inner">
-    <swiper
-        class="swiper"
-        :options="swiperOption"
-      >
-     
-        <swiper-slide   
+      <swiper
+          class="swiper"
+          :options="swiperOption"
+        >
+          <swiper-slide   
           v-for="film in films" 
           :key="film.id" >
-          <div class="card mb-3">
+          <div class="card">
             <img class = "card-img-top" v-bind:src="'http://image.tmdb.org/t/p/w300/' + film.poster_path" width='100px'>
-            <div class="card-body" style="width: 18rem;">
+            <div class="card-body" >
               <!-- <p class="card-text"> {{  }} </p> -->
               <h5 class="card-title"> {{ film.title }} </h5>
               <p class="card-text"> {{ film.release_date}} </p>
@@ -21,18 +20,13 @@
             </div>
           </div>
         </swiper-slide>
+
         <div class="swiper-button-prev" slot="button-prev"></div>
         <div class="swiper-button-next" slot="button-next"></div>
-    </swiper>
+      </swiper>
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-  .container {
-    padding-top: 40px;
-  }
-</style>
 
 <script>
 import axios from 'axios'
@@ -68,25 +62,25 @@ export default {
         navigation: {
             nextEl: '.swiper-button-next',
             prevEl: '.swiper-button-prev'
+        },
+        breakpoints: {
+          1024: {
+            slidesPerView: 5,
+            spaceBetween: 10
+          },
+          768: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          },
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          320: {
+            slidesPerView: 3,
+            spaceBetween: 10
+          }
         }
-        // breakpoints: {
-        //   1024: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 40
-        //   },
-        //   768: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 30
-        //   },
-        //   640: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 20
-        //   },
-        //   320: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 10
-        //   }
-        // }
       }
     }
   },
@@ -101,8 +95,11 @@ export default {
 }
 </script>
 
-<style scoped>
-  /* @import "@/scss/custom"; */
+<style lang="scss" scoped>
+  .container {
+    padding-top: 40px;
+  }
+
   div {
     color : black
   }
@@ -115,14 +112,13 @@ export default {
 
   .swiper-button-next,
   .swiper-button-prev {
-    position: absolute;
-    height: 50px;
-    width: 50px;
+    /* position: absolute; */
+    height: 40px;
+    width: 40px;
     background-color: white;
     border-radius: 50%;
-    /* color: white; */
     --swiper-navigation-color: #000;
-    --swiper-navigation-size: 25px;
+    --swiper-navigation-size: 20px;
   }
 
   .swiper-button-next:hover,
