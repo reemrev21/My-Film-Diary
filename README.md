@@ -1,3 +1,3 @@
 # My Film Diary
-bootstrap
-vue-awesome-swiper
+- bootstrap
+- vue-awesome-swiper
