@@ -33,11 +33,11 @@ export default {
 
   actions: {
     async searchFilms({ state, commit }, payload) {
-      const { title, page } = payload
-      router.push(`/Film?q=${title}`).catch(()=>{});
-      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
-
-      const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&page=${page}`)
+      const res = await _fetchFilm({
+        ...payload,
+        page: 1
+      })
+      router.push(`/Film?q=${payload.title}`).catch(()=>{});
       const { results, total_results } = res.data
       commit('updateState', {
         films: _uniqBy(results, 'id'),
@@ -49,30 +49,35 @@ export default {
       console.log(pageLength)
 
       // 추가 요청 전송
-      if (pageLength > 1) {
-        for (let page = 2; page <= pageLength; page += 1) {
-          if( page > ( pageLength / 10 )) { break }
-          const res = await axios.get(`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&page=${page}`)
-          const { results } = res.data
-          commit('updateState'), {
-            films: [...state.films, ..._uniqBy(results, 'id')]
-          }
-        }
-      }
+      // if (pageLength > 1) {
+      //   for (let page = 2; page <= pageLength; page += 1) {
+      //     if( page > ( pageLength / 10 )) { break }
+      //     const res = await _fetchFilm({
+      //       ...payload,
+      //       page
+      //     })
+      //     const { results } = res.data
+      //     commit('updateState'), {
+      //       films: [...state.films, ..._uniqBy(results, 'id')]
+      //     }
+      //   }
+      // }
     }
   },
+}
 
-  _fetchMovie(payload) {
-    const { title, release_date, genre_ids, page } = payload
-    const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
-    const url =`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&page=${page}`
-    
-    return new Promise((resolve, reject) => {
-      axios.get(url)
-        .then((res) => {
-          resolve(res)
-        })
-        .catch()
-    })
-  }
+function _fetchFilm(payload) {
+  const { title, page } = payload
+  const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+  const url =`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&page=${page}`
+  
+  return new Promise((resolve, reject) => {
+    axios.get(url)
+      .then((res) => {
+        resolve(res)
+      })
+      .catch(err => {
+        reject(err.message)
+      })
+  })
 }
