@@ -23,6 +23,8 @@
 import FilmItem from '@/components/film/FilmItem'
 import InfiniteLoading from 'vue-infinite-loading'
 import axios from 'axios'
+import router from '../../router'
+
 
 export default {
   components: {
@@ -32,7 +34,7 @@ export default {
 
   data() {
     return {
-      page: 2,
+      page: 1,
       film: []
     }
   },
@@ -67,6 +69,7 @@ export default {
           $state.loaded();
         } else {
           $state.complete();
+
         }
       });
     },

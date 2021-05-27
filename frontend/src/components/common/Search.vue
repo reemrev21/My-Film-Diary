@@ -20,21 +20,21 @@ export default {
     }
   },
 
-  mounted() {
-    this.q = this.$route.query.q
-    if(this.q === undefined) {
+  // mounted() {
+  //   this.q = this.$route.query.q
+  //   if(this.q === undefined) {
 
-    } else {
-      this.$store.dispatch('film/searchFilms', { title: this.q })
+  //   } else {
+  //     this.$store.dispatch('film/searchFilms', { title: this.q })
 
-    }
-  },
+  //   }
+  // },
 
 
   methods: {
-    async Search() {     
+    async Search() {
       this.$store.dispatch('film/searchFilms', { title: this.title })
-    }
+    },
   },
   
 

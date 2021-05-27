@@ -38,10 +38,13 @@ export default {
           page: 1
         })
         router.push(`/Film?q=${payload.title}`).catch(()=>{});
+        console.log("dd")
         const { results } = res.data
         commit('updateState', {
           films: _uniqBy(results, 'id'),
         })
+        history.go(0)
+
   
         // console.log(total_results)
         // console.log(typeof total_results) // number
