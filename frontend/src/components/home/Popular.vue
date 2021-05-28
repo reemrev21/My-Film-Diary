@@ -10,7 +10,7 @@
           v-for="film in films" 
           :key="film.id" >
           <div class="card">
-            <img class = "card-img-top" v-bind:src="'http://image.tmdb.org/t/p/w300/' + film.poster_path" width='100px'>
+            <img class = "card-img-top" v-bind:src="'http://image.tmdb.org/t/p/w300/' + film.poster_path" width="200px" height="400px">
             <div class="card-body" >
               <!-- <p class="card-text"> {{  }} </p> -->
               <h5 class="card-title"> {{ film.title }} </h5>
@@ -119,5 +119,11 @@ export default {
   .swiper-button-next:hover,
   .swiper-button-prev:hover {
     background-color: #f26f6f;
+  }
+
+  .card-title {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 </style>

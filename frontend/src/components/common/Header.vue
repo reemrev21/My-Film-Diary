@@ -41,6 +41,10 @@ export default {
         //   name: 'Film',
         //   href: '/Film'
         // },
+      //  {
+      //     name: 'FilmDetail',
+      //     href: '/FilmDetail'
+      //   },
        {
           name: 'Login',
           href: '/Login'
@@ -53,9 +57,9 @@ export default {
           name: 'About',
           href: '/About'
         },
-      ]
+      ],
     }
-  }
+  },
 }
 </script>
 
