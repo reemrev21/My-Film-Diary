@@ -1,21 +1,17 @@
 <template>
   <div class="container">
     <div class="inner">
-      <div class="message">
-        {{ message }}
-      </div>
       <div class="films">
-        <FilmItem 
+        <div class="errMessage" v-if="title==''">
+          검색어를 입력하세요
+        </div>
+        <FilmItem v-else
           v-for="film in films" 
           :key="film.id" 
           :film="film"/>
       </div>
       <div class="infinite-wrapper">
-        <infinite-loading force-use-infinite-wrapper @infinite="infiniteHandler" spinner="waveDots">
-          <div slot="no-more" 
-              style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;">
-            목록의 끝입니다 :)</div>
-        </infinite-loading>
+        <infinite-loading force-use-infinite-wrapper @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </div>
     </div>
   </div>
@@ -36,8 +32,7 @@ export default {
 
   data() {
     return {
-      page: 1,
-      film: []
+      title: ''
     }
   },
 
@@ -46,32 +41,22 @@ export default {
     films() {
       return this.$store.state.film.films
     },
-
-    message() {
-      return this.$store.state.film.message
-    }
   },
 
+  mounted() {
+
+  },
+  
+
   methods: {
-    infiniteHandler($state) {
-      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
-      const title = this.$route.query.q
-      // const page = this.page
-      const url =`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&`
-      
-      axios.get(url, {
-        params: {
-          page: this.page,
-        },
-      }).then((res) => {
-        if (res.data.results.length) {
-          console.log(res.data.results.length) // 20
-          this.page += 1;
-          this.films.push(...res.data.results);
+    async infiniteHandler($state) {
+      this.title = this.$route.query.q
+      this.$store.dispatch('film/searchFilms', {title: this.title})
+     .then((loadState) => {
+        if (loadState) {
           $state.loaded();
         } else {
           $state.complete();
-
         }
       });
     },

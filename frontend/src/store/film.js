@@ -7,11 +7,11 @@ export default {
   namespaced: true,
   state: () => ({
     films: [],
-    message: '',
     loading: false,
     number: '',
     page: 1,
-    theMoive: {}
+    theMoive: {},
+    message: ''
   }),
 
   getters: {
@@ -32,64 +32,43 @@ export default {
   },
 
   actions: {
-    async searchFilms({ state, commit }, payload) {
+    async searchFilms({ commit, state }, payload) {
+      const { title } = payload
       try {
-        const res = await _fetchFilm({
-          ...payload,
-          page: 1
-        })
-        router.push(`/Film?q=${payload.title}`).catch(()=>{});
-        const { results } = res.data
-        commit('updateState', {
-          films: _uniqBy(results, 'id'),
-        })
-        history.go(0)
-      } catch (error) {
-        commit('updataeState', {
-          films: [],
-          message
-        })
-      }
-    },
+        return new Promise((resolve, reject) => {
+          let loaded = undefined
+          if (title == '') {
+            // router.push() 에러 감지 페이지
+          }
+          else {
+            router.push(`/Film?q=${title}`).catch(() => { })
+          }
+          const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+          const url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}`
 
-    async searchFilmWithID(context, payload) {
-      const { id } = payload
-      commit('updateState', {
-        theMoive: {}
-      })
-      try {
-        const res = await _fetchFilm({
-          id
+          axios.get(url, {
+            params: {
+              page: state.page,
+            },
+          }).then((res) => {
+            if (res.data.results.length) {
+              console.log(res.data.results.length) // 20 
+              state.page += 1
+              state.films.push(...res.data.results)
+              commit('updateState', {
+                films: _uniqBy(state.films, 'id'),
+              })
+              loaded = true
+            } else {
+              loaded = false
+            }
+            resolve(loaded)
+          }).catch(() => {})
         })
-        commit('updateState', {
-          theMoive: res.data
-        })
-      }catch(err){
-        commit('updateState', {
-          theMoive: {}
-        }) 
+      } catch (err) {
+        reject(err)
       }
+
     }
-  },
-}
-
-function _fetchFilm(payload) {
-  const { title, id } = payload
-  const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
-  const url = id 
-  ? `https://api.themoviedb.org/3/moive/${id}?api_key=${TMDB_API_KEY}`
-  : `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}`
-  return new Promise((resolve, reject) => {
-    axios.get(url)
-      .then((res) => {
-        console.log(res)
-        if(res.data.Error) {
-          reject(res.data.Error)
-        }
-        resolve(res)
-      })
-      .catch(err => {
-        reject(err.message)
-      })
-  })
+  }
 }
