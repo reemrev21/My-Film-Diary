@@ -1,27 +1,16 @@
 <template>
   <div class="container">
-    <div class="skeletons">
-      <div class="skeleton poaster"></div>
-      <div class="spec">
-        <div class="skeleton title"></div>
-        <div class="skeleton spec"></div>
-        <div class="skeleton plot"></div>
-        <div class="skeleton etc"></div>
-        <div class="skeleton etc"></div>
-        <div class="skeleton etc"></div>
-      </div>
-    </div>
+    <FilmItemDetail />
   </div>
 </template>
 
 <script>
+import FilmItemDetail from '@/components/film/FilmItemDetail'
+
 export default {
-  created() {
-    console.log(this.$route)
-    this.$store.dispatch('film/searchFilmWithID', {
-      id: this.$route.params.id
-    })
-  }
+  components: {
+    FilmItemDetail
+  },
 }
 </script>
 

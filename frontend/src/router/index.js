@@ -26,6 +26,7 @@ const routes = [
     path: '/FilmDetail/:id',
     name: 'FilmDetail',
     component: FilmDetail,
+    props: true
   },  
   {
     path: '/about',
@@ -42,7 +43,6 @@ const routes = [
     name: 'Login',
     component: Login
   },
-
 ]
 
 const router = new VueRouter({
