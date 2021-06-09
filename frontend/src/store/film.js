@@ -12,7 +12,8 @@ export default {
     page: 1,
     theFilm: '',
     message: '',
-    id: ''
+    id: '',
+    theActor: ''
   }),
 
   getters: {
@@ -33,8 +34,7 @@ export default {
     singleFilm(state, id) {
       state.id = id
       router.push('/filmDetail/' + state.id)
-    }
-
+    },
   },
 
   actions: {
@@ -75,14 +75,32 @@ export default {
       }
     },
 
-    detailFilm({state, commit}, id) {
+    detailFilm({ state }, id) {
       state.id = id
       const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}`
+
       axios
-        .get(`https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}&language=en-US`)
+        .get(url)
         .then(res => {
           state.theFilm = res.data
           console.log(state.theFilm)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    },
+
+    detailFilmActor({ state }, id) {
+      state.id = id
+      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+      const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`
+
+      axios
+        .get(url)
+        .then(res => {
+          state.theActor = res.data
+          console.log(state.theActor)
         })
         .catch(error => {
           console.log(error)

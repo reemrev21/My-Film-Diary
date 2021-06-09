@@ -20,9 +20,6 @@
 <script>
 import FilmItem from '@/components/film/FilmItem'
 import InfiniteLoading from 'vue-infinite-loading'
-import axios from 'axios'
-import router from '../../router'
-
 
 export default {
   components: {
