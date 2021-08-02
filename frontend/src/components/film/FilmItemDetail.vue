@@ -3,7 +3,7 @@
     <div
       class="movie-details">
       <div
-        :style="{ backgroundImage: `url(http://image.tmdb.org/t/p/w300/${theFilm.poster_path})`}"
+        :style="{ backgroundImage: `url(https://image.tmdb.org/t/p/original/${theFilm.poster_path})`}"
         class="poster">
       </div>
       <div class="specs">
@@ -37,7 +37,7 @@
         </div> -->
         <div>
           <h3 >Director</h3>
-          <span v-for="director in theActor.crew" :key="director.id"> 
+          <span v-for="director in theActor.crew" :key="director.credit_id"> 
             <span v-if="director.job=='Director'"> {{ director.name }} </span>
           </span>
         </div>
@@ -56,7 +56,7 @@
         </div>
         <div>
           <h3>Actors</h3>
-          <span v-for="actor in theActor.cast" :key="actor.id"> 
+          <span v-for="actor in theActor.cast" :key="actor.cast_id"> 
             {{ actor.name }} : {{ actor.character }}
           </span>
         </div>
