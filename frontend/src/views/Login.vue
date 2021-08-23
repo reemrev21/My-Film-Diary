@@ -1,6 +1,7 @@
 <template>
   <div>
-    <LoginForm />
+    <Button class="t_btn">버튼입니다.</Button>
+    <!-- <LoginForm /> -->
   </div>
 </template>
 
@@ -13,3 +14,12 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+  .t_btn {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+</style>

@@ -54,13 +54,13 @@
             {{ genre.name }} 
           </span>
         </div>
-        <div>
-          <h3>Actors</h3>
-          <span v-for="actor in theActor.cast" :key="actor.cast_id"> 
-            {{ actor.name }} : {{ actor.character }}
-          </span>
-        </div>
       </div>
+    </div>
+    <div class="actors">
+      <h3>Actors</h3>
+      <span v-for="actor in theActor.cast" :key="actor.cast_id"> 
+        {{ actor.name }} : {{ actor.character }}
+      </span>
     </div>
   </div>
 </template>
@@ -102,11 +102,12 @@ export default {
 .container {
   padding-top: 40px;
   padding-bottom: 40px;
-  /* background-color: $gray-200;
+  display: flex;
+  flex-direction: column;
+/* background-color: $gray-200;
   background-size: cover;
   background-position: center;
   position: relative; */
-
 }
 
 .movie-details {
@@ -162,6 +163,18 @@ export default {
         }
       }
     }
+    h3 {
+      margin: 24px 0 6px;
+      color: $black;
+      font-family: "Oswald", sans-serif;
+      font-size: 20px;
+    }
+  }
+
+  .actors {
+    display: flex;
+    flex-direction: row;
+    
     h3 {
       margin: 24px 0 6px;
       color: $black;
