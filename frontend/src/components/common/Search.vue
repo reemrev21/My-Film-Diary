@@ -1,14 +1,12 @@
 <template>
-  <div class="container">
-    <div class="input-group">
-      <input v-model="title" type="text"
-        class="form-control"
-        placeholder="Search for Films and People"
-        @keyup.enter="Search" />
-        <button class="btn btn-primary" @click="Search">
-          <i class="bi bi-search" style="color: white"></i> 
-        </button>
-    </div>
+  <div class="input-group">
+    <input v-model="title" type="text"
+      class="form-control"
+      placeholder="Search for Films and People"
+      @keyup.enter="Search" />
+      <button class="btn btn-primary" @click="Search">
+        <i class="bi bi-search" style="color: white"></i> 
+      </button>
   </div>
 </template>
 <script>

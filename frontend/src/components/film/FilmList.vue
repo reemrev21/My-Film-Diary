@@ -1,9 +1,6 @@
 <template>
   <div class="container">
     <div class="inner">
-      <div class="message">
-        {{ message }}
-      </div>
       <div class="films">
         <FilmItem 
           v-for="film in films" 
@@ -46,34 +43,12 @@ export default {
     films() {
       return this.$store.state.film.films
     },
-
-    message() {
-      return this.$store.state.film.message
-    }
   },
 
   methods: {
     infiniteHandler($state) {
-      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
       const title = this.$route.query.q
-      // const page = this.page
-      const url =`https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}&`
-      
-      axios.get(url, {
-        params: {
-          page: this.page,
-        },
-      }).then((res) => {
-        if (res.data.results.length) {
-          console.log(res.data.results.length) // 20
-          this.page += 1;
-          this.films.push(...res.data.results);
-          $state.loaded();
-        } else {
-          $state.complete();
-
-        }
-      });
+      this.$store.dispatch('film/searchFilms', { title: title })
     },
   },
 }
