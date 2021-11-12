@@ -2,17 +2,16 @@
   <div class="container">
     <div class="inner">
       <div class="films">
-        <FilmItem 
+        <div class="errMessage" v-if="title==''">
+          검색어를 입력하세요
+        </div>
+        <FilmItem v-else
           v-for="film in films" 
           :key="film.id" 
           :film="film"/>
       </div>
       <div class="infinite-wrapper">
-        <infinite-loading force-use-infinite-wrapper @infinite="infiniteHandler" spinner="waveDots">
-          <div slot="no-more" 
-              style="color: rgb(102, 102, 102); font-size: 14px; padding: 10px 0px;">
-            목록의 끝입니다 :)</div>
-        </infinite-loading>
+        <infinite-loading force-use-infinite-wrapper @infinite="infiniteHandler" spinner="waveDots"></infinite-loading>
       </div>
     </div>
   </div>
@@ -21,9 +20,6 @@
 <script>
 import FilmItem from '@/components/film/FilmItem'
 import InfiniteLoading from 'vue-infinite-loading'
-import axios from 'axios'
-import router from '../../router'
-
 
 export default {
   components: {
@@ -33,8 +29,7 @@ export default {
 
   data() {
     return {
-      page: 1,
-      film: []
+      title: ''
     }
   },
 
@@ -43,12 +38,33 @@ export default {
     films() {
       return this.$store.state.film.films
     },
+<<<<<<< HEAD
+=======
   },
 
+  mounted() {
+
+>>>>>>> c6daa62f021d040b12f962366707e88e98aacd1f
+  },
+  
+
   methods: {
+<<<<<<< HEAD
     infiniteHandler($state) {
       const title = this.$route.query.q
       this.$store.dispatch('film/searchFilms', { title: title })
+=======
+    async infiniteHandler($state) {
+      this.title = this.$route.query.q
+      this.$store.dispatch('film/searchFilms', {title: this.title})
+     .then((loadState) => {
+        if (loadState) {
+          $state.loaded();
+        } else {
+          $state.complete();
+        }
+      });
+>>>>>>> c6daa62f021d040b12f962366707e88e98aacd1f
     },
   },
 }

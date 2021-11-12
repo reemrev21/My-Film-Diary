@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="filmBox">
+    <div class="filmBox" @click="singleFilm(film.id)">
       <div class="film"
           :style="{ backgroundImage: `url(http://image.tmdb.org/t/p/w300/${film.poster_path})`}"
       ></div>
@@ -25,7 +25,13 @@ export default {
       type: Object,
       defalut: () => ({ })
     }
-  }
+  },
+
+  methods: {
+    singleFilm(id) {
+      this.$store.commit('film/singleFilm', id)
+    }
+  },
 }
 </script>
 

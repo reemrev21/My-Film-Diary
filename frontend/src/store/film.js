@@ -7,9 +7,16 @@ export default {
   namespaced: true,
   state: () => ({
     films: [],
+<<<<<<< HEAD
+=======
+    loading: false,
+>>>>>>> c6daa62f021d040b12f962366707e88e98aacd1f
     number: '',
     page: 1,
-    theMoive: {}
+    theFilm: '',
+    message: '',
+    id: '',
+    theActor: ''
   }),
 
   getters: {
@@ -27,9 +34,14 @@ export default {
       state.films = []
     },
 
+    singleFilm(state, id) {
+      state.id = id
+      router.push('/filmDetail/' + state.id)
+    },
   },
 
   actions: {
+<<<<<<< HEAD
     async searchFilms(state, payload) {
       router.push(`/Film?q=${payload.title}`).catch(()=>{});
       const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
@@ -52,25 +64,80 @@ export default {
         }
       });
       // history.go(0)
+=======
+    async searchFilms({ commit, state }, payload) {
+      const { title } = payload
+      try {
+        return new Promise((resolve, reject) => {
+          let loaded = undefined
+          if (title == '') {
+            // router.push() 에러 감지 페이지
+          }
+          else {
+            router.push(`/Film?q=${title}`).catch(() => { })
+          }
+          const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+          const url = `https://api.themoviedb.org/3/search/movie?api_key=${TMDB_API_KEY}&query=${title}`
+
+          axios.get(url, {
+            params: {
+              page: state.page,
+            },
+          }).then((res) => {
+            if (res.data.results.length) {
+              state.page += 1
+              state.films.push(...res.data.results)
+              commit('updateState', {
+                films: _uniqBy(state.films, 'id'),
+              })
+              loaded = true
+            } else {
+              loaded = false
+            }
+            resolve(loaded)
+          }).catch(() => {})
+        })
+      } catch (err) {
+          reject(err)
+      }
     },
 
-    async searchFilmWithID(context, payload) {
-      const { id } = payload
-      commit('updateState', {
-        theMoive: {}
-      })
-      try {
-        const res = await _fetchFilm({
-          id
+    detailFilm({ state }, id) {
+      state.id = id
+      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+      const url = `https://api.themoviedb.org/3/movie/${id}?api_key=${TMDB_API_KEY}`
+
+      axios
+        .get(url)
+        .then(res => {
+          state.theFilm = res.data
+          console.log(state.theFilm)
         })
-        commit('updateState', {
-          theMoive: res.data
+        .catch(error => {
+          console.log(error)
         })
-      }catch(err){
-        commit('updateState', {
-          theMoive: {}
-        }) 
-      }
+>>>>>>> c6daa62f021d040b12f962366707e88e98aacd1f
+    },
+
+    detailFilmActor({ state }, id) {
+      state.id = id
+      const TMDB_API_KEY = '017a4e07abc72d3e870413f8a939cc5c'
+      const url = `https://api.themoviedb.org/3/movie/${id}/credits?api_key=${TMDB_API_KEY}`
+
+      axios
+        .get(url)
+        .then(res => {
+          state.theActor = res.data
+          console.log(state.theActor)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     }
   },
+<<<<<<< HEAD
 }
+=======
+
+  }
+>>>>>>> c6daa62f021d040b12f962366707e88e98aacd1f

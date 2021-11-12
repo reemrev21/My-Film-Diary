@@ -32,6 +32,7 @@ export default {
   methods: {
     async Search() {
       this.$store.dispatch('film/searchFilms', { title: this.title })
+      history.go(0)
     },
   },
   
